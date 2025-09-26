@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>CRUD Mundo - Países</title>
+</head>
+<body>
+  <h1>Cadastrar País</h1>
+  <form action="../back/inserir_pais.php" method="POST">
+    Nome: <input type="text" name="nome" required><br>
+    Continente: <input type="text" name="continente" required><br>
+    População: <input type="number" name="populacao" required><br>
+    Idioma: <input type="text" name="idioma" required><br>
+    <button type="submit">Cadastrar</button>
+  </form>
+
+  <h2>Lista de Países</h2>
+  <iframe src="../back/listar_paises.php" width="600" height="300"></iframe>
+</body>
+</html>

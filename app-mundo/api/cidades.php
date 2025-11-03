@@ -58,6 +58,64 @@ switch($method) {
         }
         break;
         
+    case 'PUT':
+        // Atualizar cidade
+        $data = json_decode(file_get_contents("php://input"));
+        
+        if(!empty($data->id_cidade)) {
+            $id_cidade = intval($data->id_cidade);
+            $updates = array();
+            
+            if(!empty($data->nome)) {
+                $nome = $conn->real_escape_string($data->nome);
+                $updates[] = "nome = '$nome'";
+            }
+            if(isset($data->populacao)) {
+                $populacao = intval($data->populacao);
+                $updates[] = "populacao = $populacao";
+            }
+            if(!empty($data->id_pais)) {
+                $id_pais = intval($data->id_pais);
+                $updates[] = "id_pais = $id_pais";
+            }
+            
+            if(count($updates) > 0) {
+                $sql = "UPDATE cidades SET " . implode(", ", $updates) . " WHERE id_cidade = $id_cidade";
+                
+                if($conn->query($sql)) {
+                    echo json_encode(["mensagem" => "Cidade atualizada com sucesso"]);
+                } else {
+                    http_response_code(500);
+                    echo json_encode(["mensagem" => "Erro ao atualizar cidade"]);
+                }
+            } else {
+                http_response_code(400);
+                echo json_encode(["mensagem" => "Nenhum dado para atualizar"]);
+            }
+        } else {
+            http_response_code(400);
+            echo json_encode(["mensagem" => "ID da cidade não fornecido"]);
+        }
+        break;
+
+    case 'DELETE':
+        // Deletar cidade
+        if(isset($_GET['id'])) {
+            $id = intval($_GET['id']);
+            $sql = "DELETE FROM cidades WHERE id_cidade = $id";
+            
+            if($conn->query($sql)) {
+                echo json_encode(["mensagem" => "Cidade deletada com sucesso"]);
+            } else {
+                http_response_code(500);
+                echo json_encode(["mensagem" => "Erro ao deletar cidade"]);
+            }
+        } else {
+            http_response_code(400);
+            echo json_encode(["mensagem" => "ID da cidade não fornecido"]);
+        }
+        break;
+        
     default:
         http_response_code(405);
         echo json_encode(["mensagem" => "Método não permitido"]);

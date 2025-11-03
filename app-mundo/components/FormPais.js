@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
 
-const API_URL = 'http://localhost/api'; // Coloca seu IP aqui
+const API_URL = 'http://10.67.127.136/api'; // Coloca seu IP aqui
 
 export default function FormPais({ onSuccess } ) {
   const [nome, setNome] = useState('');

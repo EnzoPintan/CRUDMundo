@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import axios from 'axios';
 
-const API_URL = 'http://localhost/api';
+const API_URL = 'http://10.67.127.136/api';
 
 export default function ListaCidades({ refresh }) {
   const [cidades, setCidades] = useState([]);

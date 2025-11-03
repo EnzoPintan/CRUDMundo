@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView 
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 
-const API_URL = 'http://localhost/api';
+const API_URL = 'http://10.67.127.136/api';
 
 export default function FormCidade({ onSuccess }) {
   const [nome, setNome] = useState('');

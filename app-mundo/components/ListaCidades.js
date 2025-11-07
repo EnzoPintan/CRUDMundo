@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import axios from 'axios';
 
-const API_URL = 'http://10.67.127.136/api';
+const API_URL = 'https://8000-iskahsp4y211mqzu9f4f3-b2956e13.manus.computer/api';
 
 export default function ListaCidades({ refresh }) {
   const [cidades, setCidades] = useState([]);
@@ -17,6 +17,28 @@ export default function ListaCidades({ refresh }) {
       console.error('Erro ao carregar cidades:', error);
       setLoading(false);
     }
+  };
+
+  const deletarCidade = async (id) => {
+    Alert.alert(
+      'Confirmar',
+      'Deseja deletar esta cidade?',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Deletar',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await axios.delete(`${API_URL}/cidades.php?id_cidade=${id}`);
+              carregarCidades();
+            } catch (error) {
+              Alert.alert('Erro', 'Erro ao deletar cidade');
+            }
+          }
+        }
+      ]
+    );
   };
 
   useEffect(() => {
@@ -43,9 +65,17 @@ export default function ListaCidades({ refresh }) {
 
   const renderItem = ({ item }) => (
     <View style={styles.item}>
-      <Text style={styles.itemTitle}>🏙️ {item.nome}</Text>
-      <Text style={styles.itemText}>🌍 País: {item.nome_pais}</Text>
-      <Text style={styles.itemText}>👥 População: {parseInt(item.populacao).toLocaleString('pt-BR')}</Text>
+      <View style={styles.itemContent}>
+        <Text style={styles.itemTitle}>🏙️ {item.nome}</Text>
+        <Text style={styles.itemText}>🌍 País: {item.nome_pais}</Text>
+        <Text style={styles.itemText}>👥 População: {parseInt(item.populacao).toLocaleString('pt-BR')}</Text>
+      </View>
+      <TouchableOpacity 
+        style={styles.deleteButton}
+        onPress={() => deletarCidade(item.id_cidade)}
+      >
+        <Text style={styles.deleteButtonText}>Deletar</Text>
+      </TouchableOpacity>
     </View>
   );
 
@@ -97,6 +127,9 @@ const styles = StyleSheet.create({
     borderLeftWidth: 4,
     borderLeftColor: '#3b82f6',
   },
+  itemContent: {
+    marginBottom: 10,
+  },
   itemTitle: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -107,5 +140,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666',
     marginBottom: 4,
+  },
+  deleteButton: {
+    backgroundColor: '#ef4444',
+    padding: 10,
+    borderRadius: 6,
+    alignItems: 'center',
+  },
+  deleteButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });

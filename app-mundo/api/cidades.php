@@ -70,13 +70,13 @@ switch($method) {
                 $nome = $conn->real_escape_string($data->nome);
                 $updates[] = "nome = '$nome'";
             }
-            if(isset($data->populacao)) {
-                $populacao = intval($data->populacao);
-                $updates[] = "populacao = $populacao";
-            }
             if(!empty($data->id_pais)) {
                 $id_pais = intval($data->id_pais);
                 $updates[] = "id_pais = $id_pais";
+            }
+            if(isset($data->populacao)) {
+                $populacao = intval($data->populacao);
+                $updates[] = "populacao = $populacao";
             }
             
             if(count($updates) > 0) {
@@ -94,15 +94,15 @@ switch($method) {
             }
         } else {
             http_response_code(400);
-            echo json_encode(["mensagem" => "ID da cidade não fornecido"]);
+            echo json_encode(["mensagem" => "ID não fornecido"]);
         }
         break;
-
+        
     case 'DELETE':
         // Deletar cidade
-        if(isset($_GET['id'])) {
-            $id = intval($_GET['id']);
-            $sql = "DELETE FROM cidades WHERE id_cidade = $id";
+        if(isset($_GET['id_cidade'])) {
+            $id_cidade = intval($_GET['id_cidade']);
+            $sql = "DELETE FROM cidades WHERE id_cidade = $id_cidade";
             
             if($conn->query($sql)) {
                 echo json_encode(["mensagem" => "Cidade deletada com sucesso"]);
@@ -112,7 +112,7 @@ switch($method) {
             }
         } else {
             http_response_code(400);
-            echo json_encode(["mensagem" => "ID da cidade não fornecido"]);
+            echo json_encode(["mensagem" => "ID não fornecido"]);
         }
         break;
         

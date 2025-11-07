@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
 
-const API_URL = 'http://10.67.127.136/api';
+const API_URL = 'https://8000-iskahsp4y211mqzu9f4f3-b2956e13.manus.computer/api';
 
 export default function ListaPaises({ refresh }) {
   const [paises, setPaises] = useState([]);

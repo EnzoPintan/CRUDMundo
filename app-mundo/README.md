@@ -32,7 +32,7 @@ Coloque a pasta `api` em um servidor web com PHP (XAMPP, WAMP, etc):
 ```bash
 ipconfig
 ```
-Procure por "IPv4" (exemplo: 10.67.127.136)
+Procure por "IPv4" (exemplo: 192.168.1.100)
 
 **Edite os arquivos e troque `localhost` pelo seu IP:**
 - `components/FormPais.js`
